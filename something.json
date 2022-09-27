@@ -1,4 +1,7 @@
 {
 "1":{"id":1,"title":"Andy you are a star","artist":"The Killers","album":"Hot fuss","genre":"rock","pathToMusic":"/music/andy-you-are-a-star.mp3","pathToAlbum":"/images/hot-fuss.png"},
 "2":{"id":2,"title":"Change your mind","artist":"The Killers","album":"Hot fuss","genre":"rock","pathToMusic":"/music/change-your-mind.mp3","pathToAlbum":"/images/hot-fuss.png"}
+"3":{"id":3,"title":"Despacito","artist":"Luis Fonsi","album":"Vida","genre":"reggaeton","pathToMusic":"/music/despacito.mp3","pathToAlbum":"/images/vida.png"},
+"4":{"id":4,"title":"El muro","artist":"Daddy Yankee","album":"Barrio fino","genre":"reggaeton","pathToMusic":"/music/el-muro.mp3"},
+"5":{"id":5,"title":"Forbidden love","artist":"Madonna","album":"Confessions on the dance floor","genre":"pop","pathToMusic":"/music/forbidden-love.mp3","pathToAlbum":"/images/confessions-on-the-dance-floor.png"}
 }
