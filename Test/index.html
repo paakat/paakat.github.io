@@ -153,7 +153,7 @@
 <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
   <div class="container-fluid">
 
-  <div class="col-sm-2" id="XXX"> col-sm-4 </div>
+  <div class="col-sm-2" id="XXX">  </div>
   <div class="col"      id="XXX">
     <div id="IDaudio"></div>
   </div>
@@ -352,8 +352,7 @@ class Card extends React.Component
           </text>
         </svg>
   ) : ( 
-      <img src={URL_DB + this.props['image'] +"?raw=true"} 
-            onerror="this.onerror=null; this.src='https://www.google.com/images/srpr/logo11w.png'" > 
+      <img src={URL_DB + this.props['image'] +"?raw=true"} > 
       </img>
   )  
 }
@@ -400,8 +399,6 @@ class Body extends React.Component
       var image = GetValuesUnique(Object.values(songs[i]),"pathToAlbum"); 
       image = image.filter(element => {return element !== undefined;});
       image = (image.length > 0)?(image[0]):(''); 
-
-console.log("image:'"+ image +"' "); 
 
       list.push( <Card key={i} id={keys[i]} func={this.props.prop2} songs={songs[i]} image={image}/> ); 
     }
@@ -503,7 +500,7 @@ class Songs3 extends React.Component
 
   Display(songs) 
   {
-    songs.forEach(e => console.log(e["title"]) ); 
+    //songs.forEach(e => console.log(e["title"]) ); 
     return songs.map(s => <SongPrint song={s} key={s.id}/>); 
   }
 
@@ -546,15 +543,76 @@ function Button2({message,Display}) {
 <!--| Button2 |-->
 
 
-<!--| Search |-->
+<!--| Search1 |-->
 <script type="text/babel">
 
-const Search = () => {
-  const [greeting, setGreeting] = React.useState('my favourite song');
+
+const Search1 = () => 
+{
+  const [ count, setCount ] = React.useState(0);
+  React.useEffect(() => { if(count) console.log("[Search1] count:"+count); }, [count]);
+
+  const [employee, setEmployee] = React.useState(Object);
+
+  const [greeting, setGreeting] = React.useState('york');
   const [isActive, setIsActive] = React.useState(true);
 
-  const handleChange = (event) => setGreeting(event.target.value);
-  const handleClick = () => setIsActive(!isActive);
+  const extracting = (list,column,request) => list.filter(i => i[column].toLowerCase().includes(request));
+
+
+  function handleChange(event)
+  {
+    setGreeting(event.target["value"]);
+/*
+    axios.get(URL_SERVER).then(response => 
+    {
+      var data = DUMMY_DATA; //response.data; 
+      setEmployee( data ); 
+    }); 
+*/
+  } 
+
+/*
+  function handleClick(input) 
+  {
+    setCount(count + 1);
+
+    axios.get(URL_SERVER).then(response => 
+    {
+      var data = DUMMY_DATA; //response.data; 
+      setEmployee( data ); 
+    }); 
+
+    console.log("[handleClick] '" + event.target["value"] +"' "); 
+  }
+*/
+
+
+  function Executing() 
+  {
+    axios.get(URL_SERVER).then(response => 
+    {
+      var data = DUMMY_DATA; //response.data; 
+      setEmployee( data ); 
+    });
+
+    //return Displaying(); 
+  }
+
+
+  function Displaying({column}) 
+  {
+    var request = ("value" in event.target)?(event.target["value"]):(greeting);
+
+    console.log("[Looking for] '" + request +"' ... "); 
+
+    request = request.toLowerCase();
+    let extracted = extracting(Object.values(employee),column,request); 
+    console.log( extracted ); 
+
+    return extracted.map(s => <SongPrint song={s} key={s.id}/>);
+  }
+
 
   const Message = ({text}) => {return <h1>{text}</h1>;};
 
@@ -562,12 +620,27 @@ const Search = () => {
     <div>
       <Message text={"Search song:"} /> 
       <input type="text" value={greeting} onChange={handleChange} />
-      <Button2 message={greeting} Display={<div> Hi ... </div>}/>
+
+      <h3>
+        Looking for '{greeting}'.  
+      </h3>
+
+      <Executing/>
+
+      <h2> Found in Titles : </h2>
+      <Displaying column={"title"}/>
+
+      <h2> Found in Albums : </h2>
+      <Displaying column={"album"}/>
+
+      <h2> Found in Artist : </h2>
+      <Displaying column={"artist"}/>
+
     </div>
   )
 }
 
-Renderer("Search", <Search/>);
+Renderer("Search", <Search1/>);
 </script>
 <!--| Search |-->
 
@@ -598,7 +671,7 @@ $(document).ready(function(){
     </audio>
   </div>
   )} 
-  ReactDOM.createRoot(document.getElementById("IDaudio")).render(<React.StrictMode> <IDCOL04a/> </React.StrictMode>);
+  //ReactDOM.createRoot(document.getElementById("IDaudio")).render(<React.StrictMode> <IDCOL04a/> </React.StrictMode>);
 </script>
 <!--| Audio |-->
 
